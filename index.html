@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Air Pollution Survey - Learn about causes, effects, solutions, and findings of air pollution in rural areas.">
+    <title>Air Pollution Survey</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Air Pollution Survey</h1>
+        <p>Community Service Project by Department of Computer Science and Engineering</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" onclick="loadContent('introduction.html')">Introduction</a></li>
+            <li><a href="#" onclick="loadContent('causes.html')">Causes</a></li>
+            <li><a href="#" onclick="loadContent('effects.html')">Effects</a></li>
+            <li><a href="#" onclick="loadContent('survey.html')">Survey</a></li>
+            <li><a href="#" onclick="loadContent('solutions.html')">Solutions</a></li>
+            <li><a href="#" onclick="loadContent('conclusion.html')">Conclusion</a></li>
+         </ul>
+    </nav>
+
+    <div id="content" class="content">
+        <!-- Content will be loaded here -->
+        <main>
+            <section id="welcome">
+                <h2>Welcome to Our Air Pollution Awareness Project</h2>
+                <p>Air pollution is a significant environmental issue that affects the health of millions worldwide. This project aims to raise awareness about the causes, effects, and solutions to air pollution, especially in rural areas like Swayambupuram village.</p>
+                <p>Through surveys and research, we have gathered valuable insights into the impacts of air pollution on health, agriculture, and the environment. Our findings highlight the urgent need for action and sustainable practices.</p>
+            </section>
+    
+            <section id="key_sections">
+                <h2>Key Sections</h2>
+                <p>Explore the following sections to learn more about air pollution:</p>
+                <ul>
+                    <li><strong>What is Air Pollution?</strong> - Understand the definition and common pollutants.</li>
+                    <li><strong>Causes of Air Pollution</strong> - Discover the various factors contributing to air pollution.</li>
+                    <li><strong>Effects of Air Pollution</strong> - Learn about the short-term and long-term impacts on health and the environment.</li>
+                    <li><strong>Survey Findings</strong> - Review the insights gathered from local residents about air pollution's effects on their lives.</li>
+                    <li><strong>Conclusion</strong> - Read our recommendations for combating air pollution and promoting a healthier environment.</li>
+                </ul>
+            </section>
+    
+            <section id="call_to_action">
+                <h2>Get Involved</h2>
+                <p>Your voice matters! Join us in the fight against air pollution. Advocate for cleaner air, support sustainable practices, and educate your community about the importance of reducing pollution.</p>
+            </section>
+        </main>    </div>
+
+    <script>
+        function loadContent(fileName) {
+            fetch(fileName)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('content').innerHTML = data;
+            })
+            .catch(error => {
+                document.getElementById('content').innerHTML = '<p>Error loading content.</p>';
+            });
+        }
+    </script>
+</body>
+</html>

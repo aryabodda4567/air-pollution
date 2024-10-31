@@ -63,11 +63,6 @@
         /* Mobile Menu Toggle */
         #mobile-menu-toggle {
             display: none;
-            background-color: #34495e;
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            cursor: pointer;
         }
 
         /* Content Styles */
@@ -100,29 +95,68 @@
 
         /* Responsive Design */
         @media screen and (max-width: 768px) {
-            /* Mobile Menu */
+            /* Mobile Menu Toggle */
             #mobile-menu-toggle {
                 display: block;
+                position: fixed;
+                top: 15px;
+                right: 15px;
+                background-color: #34495e;
+                color: white;
+                padding: 10px;
+                border-radius: 5px;
+                z-index: 1000;
+                cursor: pointer;
+            }
+
+            /* Fixed Right-Side Menu */
+            nav {
+                position: fixed;
+                top: 0;
+                right: -250px;
+                width: 250px;
+                height: 100%;
+                background-color: #34495e;
+                transition: right 0.3s ease;
+                z-index: 999;
+                overflow-y: auto;
+            }
+
+            nav.active {
+                right: 0;
             }
 
             nav ul {
-                display: none;
                 flex-direction: column;
-                width: 100%;
-            }
-
-            nav ul.active {
-                display: flex;
+                height: 100%;
             }
 
             nav ul li {
                 width: 100%;
-                text-align: center;
+                text-align: right;
             }
 
             nav ul li a {
                 padding: 1rem;
-                border-top: 1px solid #45515f;
+                border-bottom: 1px solid #45515f;
+                text-align: right;
+            }
+
+            /* Overlay effect when menu is open */
+            body::after {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 998;
+                display: none;
+            }
+
+            body.menu-open::after {
+                display: block;
             }
 
             /* Adjust content for mobile */
@@ -144,10 +178,10 @@
 
     <!-- Mobile Menu Toggle -->
     <div id="mobile-menu-toggle">
-        ☰ Menu
+        ☰
     </div>
 
-    <nav>
+    <nav id="main-nav">
         <ul id="nav-menu">
             <li><a href="#" onclick="loadContent('introduction.html')">Introduction</a></li>
             <li><a href="#" onclick="loadContent('causes.html')">Causes</a></li>
@@ -193,6 +227,11 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById('content').innerHTML = data;
+                // Close menu after loading content on mobile
+                if (window.innerWidth <= 768) {
+                    document.getElementById('main-nav').classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                }
             })
             .catch(error => {
                 document.getElementById('content').innerHTML = '<p>Error loading content.</p>';
@@ -201,8 +240,26 @@
 
         // Mobile Menu Toggle
         document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
-            const navMenu = document.getElementById('nav-menu');
-            navMenu.classList.toggle('active');
+            const nav = document.getElementById('main-nav');
+            const body = document.body;
+            
+            nav.classList.toggle('active');
+            body.classList.toggle('menu-open');
+        });
+
+        // Close menu when clicking outside on mobile
+        document.body.addEventListener('click', function(event) {
+            if (window.innerWidth <= 768) {
+                const nav = document.getElementById('main-nav');
+                const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+                
+                if (nav.classList.contains('active') && 
+                    !nav.contains(event.target) && 
+                    !mobileMenuToggle.contains(event.target)) {
+                    nav.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                }
+            }
         });
     </script>
 </body>
